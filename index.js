@@ -6,6 +6,8 @@ var io = require("socket.io")(server);
 //var allusersRoom1 = [];
 //var allusersRoom2 = [];
 
+//test
+
 var allRooms ={};
 var allstickers = {};
 
