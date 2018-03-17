@@ -1,6 +1,6 @@
 const port = process.env.PORT || 10000;
 const server= require("http").Server();
-
+var request = require("request");
 var io = require("socket.io")(server);
 
 //var allusersRoom1 = [];
@@ -21,9 +21,19 @@ io.on("connection", function(socket){
     
      socket.on("sticker", function(data){
         allstickers[this.myRoom].push(data);
-         
+        
         io.to(this.myRoom).emit("newsticker", allstickers[this.myRoom]);
         
+        request.post({
+            uri:"http://localhost:8888/Henry_Db/stickers.php",
+            form: {
+                src: data.src,
+                y: data.y,
+                room: this.myRoom
+            }
+        }, (err, resp, body)=>{
+            console.log(body);
+        });
     });
     
     socket.on("joinroom", function(data){
